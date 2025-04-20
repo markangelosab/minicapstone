@@ -43,10 +43,10 @@ defineProps({
                                             <div class="flex space-x-2">
                                                 <span
                                                     v-for="role in user.roles"
-                                                    :key="role"
+                                                    :key="role.id"
                                                     class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                                                 >
-                                                    {{ role }}
+                                                    {{ role.name }}
                                                 </span>
                                             </div>
                                         </td>
@@ -62,4 +62,4 @@ defineProps({
             </div>
         </div>
     </AuthenticatedLayout>
-</template> 
+</template>

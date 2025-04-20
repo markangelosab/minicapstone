@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
     auction: Object,
@@ -10,6 +11,24 @@ const props = defineProps({
 const { auth } = usePage().props;
 
 const bidAmount = ref(props.auction.current_bid ? props.auction.current_bid + 0.01 : props.auction.start_price);
+
+const form = useForm({
+    amount: bidAmount.value,
+});
+
+function submitBid() {
+    form.amount = bidAmount.value;
+    form.post(route('bids.store', props.auction.id), {
+        onSuccess: () => {
+            alert('Bid placed successfully');
+            // Optionally reload the page or update auction data here
+            window.location.reload();
+        },
+        onError: (errors) => {
+            alert('Failed to place bid: ' + JSON.stringify(errors));
+        },
+    });
+}
 </script>
 
 <template>
@@ -138,4 +157,4 @@ const bidAmount = ref(props.auction.current_bid ? props.auction.current_bid + 0.
             </div>
         </div>
     </AuthenticatedLayout>
-</template> 
+</template>
