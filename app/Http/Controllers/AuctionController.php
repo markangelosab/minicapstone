@@ -96,7 +96,7 @@ class AuctionController extends BaseController
         if ($isAdmin) {
             $stats = [
                 'total_auctions' => Auction::count(),
-                'ongoing_auctions' => Auction::where('status', 'active')->count(),
+            'ongoing_auctions' => Auction::where('status', 'ongoing')->count(),
                 'total_users' => User::count(),
                 'total_bids' => Bid::count(),
             ];
