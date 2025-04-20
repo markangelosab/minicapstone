@@ -109,14 +109,14 @@ class AuctionController extends BaseController
             $stats = [
                 'active_bids' => Bid::where('user_id', $user->id)
                     ->whereHas('auction', function ($query) {
-                        $query->where('status', 'active');
+                        $query->where('status', 'ongoing');
                     })
                     ->count(),
                 'won_auctions' => Auction::where('winner_id', $user->id)->count(),
                 'total_bids' => Bid::where('user_id', $user->id)->count(),
                 'highest_bids' => Bid::where('user_id', $user->id)
                     ->whereHas('auction', function ($query) {
-                        $query->where('status', 'active');
+                        $query->where('status', 'ongoing');
                     })
                     ->whereRaw('amount = (SELECT MAX(amount) FROM bids WHERE auction_id = bids.auction_id)')
                     ->count(),
@@ -125,7 +125,7 @@ class AuctionController extends BaseController
             $recentBids = Bid::with(['auction'])
                 ->where('user_id', $user->id)
                 ->whereHas('auction', function ($query) {
-                    $query->where('status', 'active');
+                    $query->where('status', 'ongoing');
                 })
                 ->latest()
                 ->take(5)
