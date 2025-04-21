@@ -50,6 +50,7 @@ class BidController extends Controller
         $auctions = Auth::user()
             ->wonAuctions()
             ->with('bids')
+            ->withCount('bids')
             ->latest()
             ->paginate(10);
 
