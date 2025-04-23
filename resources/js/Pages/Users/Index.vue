@@ -1,10 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const user = page.props.auth.user;
+
+const isAdmin = user?.roles?.includes('admin');
 
 defineProps({
     users: Object,
 });
+
+console.log(isAdmin);
 </script>
 
 <template>
